@@ -1,0 +1,14 @@
+# ignore file with access credentials #
+#######################################
+
+config.py
+
+# ignore pickled dictionaries, ie data files #
+##############################################
+
+*.pickle
+
+# ignore logfiles #
+###################
+
+*Logfile*
