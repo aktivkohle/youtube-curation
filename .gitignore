@@ -12,3 +12,7 @@ config.py
 ###################
 
 *Logfile*
+
+# some other thing with private data #
+######################################
+__pycache__
