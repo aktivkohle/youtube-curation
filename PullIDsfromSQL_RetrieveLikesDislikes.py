@@ -34,7 +34,7 @@ def tryget(dictionary, key):
     if key in list(dictionary):
         return dictionary[key]
     else:
-        print ("No %s in dictionary!" %(key))
+    #   print ("No %s in dictionary!" %(key))     # too much output
         return False
 
 # Section 1 - Connect to MySQL and pull a list of videoID 's
@@ -47,10 +47,10 @@ connection = pymysql.connect(host='localhost',
                              charset='utf8mb4', # deals with the exotic emojis
                              cursorclass=pymysql.cursors.DictCursor)
 
-with connection.cursor() as cursor:
+with connection.cursor() as cursor1:
     sql = "SELECT videoId FROM search_api"
-    cursor.execute(sql)
-    videoIdsDicts = cursor.fetchall()
+    cursor1.execute(sql)
+    videoIdsDicts = cursor1.fetchall()
 
 videoIds = [d.get('videoId') for d in videoIdsDicts]
 
@@ -77,24 +77,25 @@ time.sleep(2)
 # http://stackoverflow.com/questions/312443/how-do-you-split-a-list-into-evenly-sized-chunks
 
 totalcount = 0 
-for sample_of_ten in chunks(videoIds, 10):
-    stringOfTen = stringTogether(sample_of_ten)
-       
-    payload = {'key': config.GOOGLE_API_KEY,
-               'part':'statistics,contentDetails,topicDetails',
-               'id' : stringOfTen}
-    
-    time.sleep( 1/5 ) 
-    
-    r = requests.get('https://www.googleapis.com/youtube/v3/videos', params=payload)
-    queriedAt = printDateNicely(datetime.now())
-    
-    statuscode = r.status_code
-    
-    if statuscode == 200:
-        videosInfo = r.json()
-       
-        with connection.cursor() as cursor:  
+payload = {}
+with connection.cursor() as cursor2:  
+    for sample_of_ten in chunks(videoIds, 10):
+        stringOfTen = stringTogether(sample_of_ten)
+
+        payload.update({'key': config.GOOGLE_API_KEY,
+                        'part':'statistics,contentDetails,topicDetails',
+                        'id' : stringOfTen})
+
+        time.sleep( 1/5 ) 
+
+        r = requests.get('https://www.googleapis.com/youtube/v3/videos', params=payload)
+        queriedAt = printDateNicely(datetime.now())
+
+        statuscode = r.status_code
+
+        if statuscode == 200:
+            videosInfo = r.json()
+
             for element in chunks(videoIds, 10):
                 loopings = 0
                 for item in list(videosInfo['items']):
@@ -136,7 +137,7 @@ for sample_of_ten in chunks(videoIds, 10):
                         dislikeCount = None
                         favoriteCount = None
                         commentCount = None
-                    print (favoriteCount)
+                #   print (favoriteCount)
                     topicDetails = tryget(item,'topicDetails') #****
                     if topicDetails != False:
                         relevantTopicIds = str(tryget(topicDetails, 'relevantTopicIds')) # was a list
@@ -147,11 +148,11 @@ for sample_of_ten in chunks(videoIds, 10):
 
                     # 17 columns to insert
                     sql = "INSERT INTO statistics (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                    cursor.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
+                    cursor2.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
 
             #      print ("Loopings: ", loopings) # too much output - crashing notebook
                     loopings += 1
                     totalcount += 1        
-    else:
-        print ("Status Code: ", statuscode)
+        else:
+            print ("Status Code: ", statuscode)
 print ("Totalcount: ", totalcount)
