@@ -14,10 +14,10 @@ CREATE TABLE youtubeProjectDB.statistics(
 	caption VARCHAR(8),
 	licensedContent VARCHAR(8), # don't trust Bools in PyMySQL /MySQL
 	projection VARCHAR(15),
-	relevantTopicIDs VARCHAR(30),
-	topicCategories VARCHAR(200),
-	kind VARCHAR(40),
-	etag VARCHAR(70),    
+	relevantTopicIDs VARCHAR(150),   # 30 was not enough
+	topicCategories VARCHAR(500),
+	kind VARCHAR(50),
+	etag VARCHAR(100),    
 	queriedAt VARCHAR(30),
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
  );
