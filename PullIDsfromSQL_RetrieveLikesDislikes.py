@@ -48,7 +48,7 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor1:
-    sql = "SELECT DISTINCT(videoId) FROM search_api"
+    sql = "SELECT DISTINCT(videoId) FROM search_api WHERE videoID NOT IN (SELECT videoId FROM statistics);"
     cursor1.execute(sql)
     videoIdsDicts = cursor1.fetchall()
 
