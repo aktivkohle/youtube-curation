@@ -5,6 +5,9 @@ import pymysql.cursors
 import pickle
 import argparse
 
+def printUnixTimestampNicely(Tstamp):
+    return (datetime.datetime.fromtimestamp(Tstamp).strftime("%d %B %Y %I:%M:%S %p"))
+
 parser = argparse.ArgumentParser()                                               
 parser.add_argument("--file", "-f", type=str, required=True)
 args = parser.parse_args()
@@ -31,7 +34,7 @@ with connection.cursor() as cursor:
     
     for element in list(youtubeObjects):
         print (element)
-        queriedAt = element
+        queriedAt = printUnixTimestampNicely(element)
         kind = youtubeObjects[element]['kind']
         etag = youtubeObjects[element]['etag']
         regionCode = youtubeObjects[element]['regionCode']
