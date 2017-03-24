@@ -95,64 +95,62 @@ with connection.cursor() as cursor2:
 
         if statuscode == 200:
             videosInfo = r.json()
+            loopings = 0
+            for item in list(videosInfo['items']):
+                # clear all the variables from the previous run of a loop
+                kind=etag=ID=contentDetails=duration=dimension=definition=caption=licensedContent=projection=None
+                statistics=viewCount=likeCount=dislikeCount=favoriteCount=commentCount=None
+                topicDetails=relevantTopicIds=topicCategories=None
 
-            for element in videosInfo:
-                loopings = 0
-                for item in list(videosInfo['items']):
-                    # clear all the variables from the previous run of a loop
-                    kind=etag=ID=contentDetails=duration=dimension=definition=caption=licensedContent=projection=None
-                    statistics=viewCount=likeCount=dislikeCount=favoriteCount=commentCount=None
-                    topicDetails=relevantTopicIds=topicCategories=None
+                kind = tryget(item,'kind')
+                etag = tryget(item,'etag')
+                videoId = tryget(item,'id')
 
-                    kind = tryget(item,'kind')
-                    etag = tryget(item,'etag')
-                    videoId = tryget(item,'id')
+                contentDetails = tryget(item,'contentDetails') #****
+                if contentDetails != False:
+                    duration = tryget(contentDetails,'duration')
+                    dimension = tryget(contentDetails,'dimension')
+                    definition = tryget(contentDetails,'definition')
+                    caption = tryget(contentDetails,'caption')
+                    licensedContent = str(tryget(contentDetails,'licensedContent')) # was a bool
+                    projection = tryget(contentDetails,'projection')
+                else:
+                    duration = None
+                    dimension = None
+                    definition = None
+                    caption = None
+                    licensedContent = None
+                    projection = None            
 
-                    contentDetails = tryget(item,'contentDetails') #****
-                    if contentDetails != False:
-                        duration = tryget(contentDetails,'duration')
-                        dimension = tryget(contentDetails,'dimension')
-                        definition = tryget(contentDetails,'definition')
-                        caption = tryget(contentDetails,'caption')
-                        licensedContent = str(tryget(contentDetails,'licensedContent')) # was a bool
-                        projection = tryget(contentDetails,'projection')
-                    else:
-                        duration = None
-                        dimension = None
-                        definition = None
-                        caption = None
-                        licensedContent = None
-                        projection = None            
+                statistics = tryget(item,'statistics')  #****
+                if statistics != False:
+                    viewCount = int(tryget(statistics, 'viewCount'))
+                    likeCount = int(tryget(statistics, 'likeCount'))
+                    dislikeCount = int(tryget(statistics, 'dislikeCount'))
+                    favoriteCount = int( tryget(statistics, 'favoriteCount'))
+                    commentCount = int(tryget(statistics, 'commentCount'))
+                else:
+                    viewCount = None
+                    likeCount = None
+                    dislikeCount = None
+                    favoriteCount = None
+                    commentCount = None
+            #   print (favoriteCount)
+                topicDetails = tryget(item,'topicDetails') #****
+                if topicDetails != False:
+                    relevantTopicIds = str(tryget(topicDetails, 'relevantTopicIds')) # was a list
+                    topicCategories = str(tryget(topicDetails, 'topicCategories'))
+                else:
+                    relevantTopicIds = None
+                    topicCategories = None
 
-                    statistics = tryget(item,'statistics')  #****
-                    if statistics != False:
-                        viewCount = int(tryget(statistics, 'viewCount'))
-                        likeCount = int(tryget(statistics, 'likeCount'))
-                        dislikeCount = int(tryget(statistics, 'dislikeCount'))
-                        favoriteCount = int( tryget(statistics, 'favoriteCount'))
-                        commentCount = int(tryget(statistics, 'commentCount'))
-                    else:
-                        viewCount = None
-                        likeCount = None
-                        dislikeCount = None
-                        favoriteCount = None
-                        commentCount = None
-                #   print (favoriteCount)
-                    topicDetails = tryget(item,'topicDetails') #****
-                    if topicDetails != False:
-                        relevantTopicIds = str(tryget(topicDetails, 'relevantTopicIds')) # was a list
-                        topicCategories = str(tryget(topicDetails, 'topicCategories'))
-                    else:
-                        relevantTopicIds = None
-                        topicCategories = None
+                # 17 columns to insert
+                sql = "INSERT INTO statistics (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                cursor2.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
 
-                    # 17 columns to insert
-                    sql = "INSERT INTO statistics (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                    cursor2.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
-
-            #      print ("Loopings: ", loopings) # too much output - crashing notebook
-                    loopings += 1
-                    totalcount += 1        
+        #      print ("Loopings: ", loopings) # too much output - crashing notebook
+                loopings += 1
+                totalcount += 1        
         else:
             print ("Status Code: ", statuscode)
 
