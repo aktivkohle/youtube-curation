@@ -67,18 +67,6 @@ with connection.cursor() as cursor2:
             for line in obj.transcript.text:
                 jt += line.cdata + " "  # need a space at the end of line or words crushed together!
 
-            # write an xml file
-            xmlfilename = videoId + 'Captions' + '.xml'
-            f =  open(xmlfilename, "w")
-            f.write(subTitle_xml)
-            f.close()
-
-            ## write an text file
-            textfilename = videoId + 'Captions' + '.txt'
-            f =  open(textfilename, "w")
-            f.write(jt)
-            f.close()
-
             queriedAt = printDateNicely(datetime.now())
 
             captionsText = jt
