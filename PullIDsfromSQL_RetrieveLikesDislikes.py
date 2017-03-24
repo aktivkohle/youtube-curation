@@ -48,7 +48,7 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor1:
-    sql = "SELECT videoId FROM search_api"
+    sql = "SELECT DISTINCT(videoId) FROM search_api"
     cursor1.execute(sql)
     videoIdsDicts = cursor1.fetchall()
 
@@ -96,7 +96,7 @@ with connection.cursor() as cursor2:
         if statuscode == 200:
             videosInfo = r.json()
 
-            for element in chunks(videoIds, 10):
+            for element in videosInfo:
                 loopings = 0
                 for item in list(videosInfo['items']):
                     # clear all the variables from the previous run of a loop
@@ -155,4 +155,9 @@ with connection.cursor() as cursor2:
                     totalcount += 1        
         else:
             print ("Status Code: ", statuscode)
-print ("Totalcount: ", totalcount)
+
+connection.commit() 
+#connection.rollback()
+connection.close()
+
+print ("Totalcount: ", totalcount, " written to DB.")
