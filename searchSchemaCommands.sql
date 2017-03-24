@@ -10,7 +10,7 @@ CREATE TABLE search_api(
 	videoId VARCHAR(15) NOT NULL,
 	description VARCHAR(255),
 	publishedAt DATETIME,
-	queriedAt DECIMAL(22,9),
+	queriedAt VARCHAR(30),
 	kind VARCHAR(40),
 	etag VARCHAR(70),
 	regionCode VARCHAR(2),
