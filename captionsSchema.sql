@@ -1,8 +1,9 @@
 CREATE TABLE youtubeProjectDB.captions(
 	videoId VARCHAR(15) NOT NULL,
 	captionsText TEXT,
-	captionsXML TEXT,
+	captionsFile TEXT,
 	language VARCHAR(5),
+	captionsFileFormat VARCHAR(5),
 	queryMethod VARCHAR(150), 
 	queriedAt VARCHAR(30),
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
