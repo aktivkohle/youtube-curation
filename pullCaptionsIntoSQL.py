@@ -50,32 +50,38 @@ with connection.cursor() as cursor2:
         subTitle_xml = r.text
         if len(subTitle_xml) > 5:
             print(".", end="") # so you know it's alive and looping
-            obj = untangle.parse(subTitle_xml)
-            a = obj.transcript.text
 
-            # https://github.com/stchris/untangle/issues/14
-            # b = a[5]
-            # b._name
-            # b._attributes
+            try:                
+                obj = untangle.parse(subTitle_xml)
+                a = obj.transcript.text
 
-            justText = []
+                # https://github.com/stchris/untangle/issues/14
+                # b = a[5]
+                # b._name
+                # b._attributes
 
-            for line in obj.transcript.text:
-                justText.append(line.cdata)    
+                justText = []
 
-            jt = ""
-            for line in obj.transcript.text:
-                jt += line.cdata + " "  # need a space at the end of line or words crushed together!
+                for line in obj.transcript.text:
+                    justText.append(line.cdata)    
+
+                jt = ""
+                for line in obj.transcript.text:
+                    jt += line.cdata + " "  # need a space at the end of line or words crushed together!            
+            except:
+                jt = ""
 
             queriedAt = printDateNicely(datetime.now())
 
             captionsText = jt
             captionsXML = subTitle_xml
+            captionsFileFormat = ".xml"
+
             try:
-                sql = "INSERT INTO captions (videoId, captionsText, captionsXML, language, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s)"
-                cursor2.execute(sql, (videoId, captionsText, captionsXML, language, queryMethod, queriedAt))   
+                sql = "INSERT INTO captions (videoId, captionsText, captionsFile, language, captionsFileFormat, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+                cursor2.execute(sql, (videoId, captionsText, captionsXML, language, captionsFileFormat, queryMethod, queriedAt))   
             except:
-                print("Oops!",sys.exc_info()[0],"occured with videoId", videoId)
+                print("\n", "Oops!",sys.exc_info()[0],"occured with videoId", videoId)
         else:
             print("X", end="") # looping but not so healthy
             
