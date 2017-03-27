@@ -26,8 +26,8 @@ with connection.cursor() as cursor1:
 
 videoIds = [d.get('videoId') for d in videoIdsDicts]
 
-# Try just the first 10 first:
-videoIds = videoIds[:100]
+# For testing try just the first 10 first:
+# videoIds = videoIds[:100]
 
 time.sleep(2) 
 
@@ -80,11 +80,12 @@ with connection.cursor() as cursor2:
             try:
                 sql = "INSERT INTO captions (videoId, captionsText, captionsFile, language, captionsFileFormat, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s)"
                 cursor2.execute(sql, (videoId, captionsText, captionsXML, language, captionsFileFormat, queryMethod, queriedAt))   
+                connection.commit()   # safer here otherwise might lose hours of work that this program does
             except:
                 print("\n", "Oops!",sys.exc_info()[0],"occured with videoId", videoId)
         else:
             print("X", end="") # looping but not so healthy
             
-connection.commit() 
+ 
 #connection.rollback()
 connection.close()   
