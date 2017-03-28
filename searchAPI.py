@@ -8,7 +8,7 @@ import pprint
 import pickle
 
 logfileName = datetime.now().strftime("%d%B%Y%I:%M:%S%p") + '_Logfile.txt'
-f = open(logfileName, 'w')
+f = open(./logfiles/logfileName, 'w')
 
 youtubeObjects = {}
 

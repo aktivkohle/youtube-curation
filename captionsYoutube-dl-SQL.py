@@ -67,7 +67,7 @@ time.sleep(2)
 
 # Try just the first 5 first for testing purposes:
 # Comment this out for serious use!
-videoIds = videoIds[:100]
+# videoIds = videoIds[:100]
 
 with connection.cursor() as cursor2:
     for videoId in videoIds:
@@ -107,4 +107,4 @@ with connection.cursor() as cursor2:
         else:
             print ("\n","There was a standard error with videoId ", videoId, "!!", " Error Contents: ", result.stderr, "\n")    
 
-
+connection.close()

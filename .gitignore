@@ -12,6 +12,9 @@ config.py
 ###################
 
 *Logfile*
+logfiles/
+youtube-dl-output/
+
 
 # some other thing with private data #
 ######################################
