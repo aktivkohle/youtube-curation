@@ -8,9 +8,8 @@ import datetime
 from dateutil.relativedelta import relativedelta
 import time
 import pprint
-import pickle
 import pymysql.cursors
-import pickle
+import re
 
 def printUnixTimestampNicely(Tstamp):
     return (datetime.datetime.fromtimestamp(Tstamp).strftime("%d %B %Y %I:%M:%S %p"))
@@ -40,13 +39,15 @@ def wr(message, p, fi):    # to write to log file
     fi.write('\n')
     
 def zed(ts):
+    dotOooz = re.compile(".*[.]\d{3}Z$")
+    if (dotOooz.match(ts) != None):
+        return ts    
     ending = ts[-1:]
     if ending == 'Z':
         return ts[:-1] + '.000Z'   
     else:
         return ts + '.000Z'
     
-
 
 def storeMeInSQL(element, qq, SQLconnection, openlogfileHandle):
     queriedAt = printUnixTimestampNicely(time.time())
@@ -135,6 +136,7 @@ while end_datetime < end_of_month_datetime:
     print ("begin: ", zed(bs))
     print ("end: ", zed(es))
     f.write("begin: " + zed(bs))
+    f.write("\n")
     f.write("end: " + zed(es))
         
     payload.update({'publishedAfter' : zed(bs)})
