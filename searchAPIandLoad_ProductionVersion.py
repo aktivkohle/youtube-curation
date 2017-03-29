@@ -78,8 +78,8 @@ def storeMeInSQL(element, qq, SQLconnection, openlogfileHandle):
             with SQLconnection.cursor() as cursor2:
                 cursor2.execute(sql2, (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, qq))
         else:
-            openlogfileHandle.write("Avoided saving a duplicate into SQL!")
-            openlogfileHandle.write('\n')
+            openlogfileHandle.write("Avoided saving a duplicate into SQL!" + " - " + videoId)
+            openlogfileHandle.write("\n")
         SQLconnection.commit()
     
 
@@ -106,7 +106,8 @@ connection = pymysql.connect(host='localhost',
                              charset='utf8mb4', # deals with the exotic emojis
                              cursorclass=pymysql.cursors.DictCursor)
 ##############################################################################################################
-          
+
+print ("\n\n")          
 printDateNicely(datetime.datetime.now())
 
 payload = {'key': config.GOOGLE_API_KEY, 
@@ -135,9 +136,11 @@ while end_datetime < end_of_month_datetime:
 
     print ("begin: ", zed(bs))
     print ("end: ", zed(es))
+    f.write("\n")
     f.write("begin: " + zed(bs))
     f.write("\n")
     f.write("end: " + zed(es))
+    f.write("\n")
         
     payload.update({'publishedAfter' : zed(bs)})
     payload.update({'publishedBefore': zed(es)})
