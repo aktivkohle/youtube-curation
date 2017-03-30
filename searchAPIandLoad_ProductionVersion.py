@@ -119,6 +119,18 @@ payload = {'key': config.GOOGLE_API_KEY,
     'maxResults':50}    
 
 
+# videoCaption 	string
+# The videoCaption parameter indicates whether the API should filter video search results based on 
+# whether they have captions. If you specify a value for this parameter, 
+# you must also set the type parameter's value to video
+# Acceptable values are:
+
+# any – Do not filter results based on caption availability.
+# closedCaption – Only include videos that have captions.
+# none – Only include videos that do not have captions.
+# complete documentation here: https://developers.google.com/youtube/v3/docs/search/list
+
+
 counter = 0
 #begin_string = '2017-02-01T00:00:00Z'
 end_datetime = dateutil.parser.parse(begin_string).replace(tzinfo=None)

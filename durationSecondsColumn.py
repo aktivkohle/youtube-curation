@@ -12,6 +12,7 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor:
+    ytDuration = 1
     while ytDuration != None:
         sql = "SELECT duration, durationSeconds, id FROM statistics WHERE durationSeconds IS NULL;"
         cursor.execute(sql)
