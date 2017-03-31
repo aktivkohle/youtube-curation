@@ -9,6 +9,7 @@ import config
 import requests
 from datetime import datetime
 import time
+import isodate
 
 def printDateNicely(timestamp):
     reg_format_date = timestamp.strftime("%d %B %Y %I:%M:%S %p")
@@ -99,7 +100,7 @@ with connection.cursor() as cursor2:
             for item in list(videosInfo['items']):
                 # clear all the variables from the previous run of a loop
                 kind=etag=ID=contentDetails=duration=dimension=definition=caption=licensedContent=projection=None
-                statistics=viewCount=likeCount=dislikeCount=favoriteCount=commentCount=None
+                statistics=viewCount=likeCount=dislikeCount=favoriteCount=commentCount=durationSeconds=None
                 topicDetails=relevantTopicIds=topicCategories=None
 
                 kind = tryget(item,'kind')
@@ -109,6 +110,8 @@ with connection.cursor() as cursor2:
                 contentDetails = tryget(item,'contentDetails') #****
                 if contentDetails != False:
                     duration = tryget(contentDetails,'duration')
+                    # http://stackoverflow.com/questions/16742381/how-to-convert-youtube-api-duration-to-seconds
+                    durationSeconds = int(isodate.parse_duration(duration).total_seconds())
                     dimension = tryget(contentDetails,'dimension')
                     definition = tryget(contentDetails,'definition')
                     caption = tryget(contentDetails,'caption')
@@ -144,9 +147,9 @@ with connection.cursor() as cursor2:
                     relevantTopicIds = None
                     topicCategories = None
 
-                # 17 columns to insert
-                sql = "INSERT INTO statistics (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                cursor2.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
+                # 18 columns to insert
+                sql = "INSERT INTO statistics (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, durationSeconds, dimension, definition, caption,licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                cursor2.execute(sql, (videoId, viewCount, likeCount, dislikeCount, favoriteCount, commentCount, duration, durationSeconds, dimension, definition, caption,licensedContent, projection, relevantTopicIds, topicCategories, kind, etag, queriedAt))        
 
         #      print ("Loopings: ", loopings) # too much output - crashing notebook
                 loopings += 1

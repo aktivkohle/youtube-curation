@@ -1,0 +1,28 @@
+(miniconda3-latest) felix@pegasus ~/Schreibtisch/DSR/youtube_api_projekt $ python -c "import os; import spacy; print(os.path.dirname(spacy.__file__))"
+(miniconda3-latest) felix@pegasus ~/Schreibtisch/DSR/youtube_api_projekt $ python -m pytest /home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/spacy  --vectors --models --slow
+Traceback (most recent call last):
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/_pytest/config.py", line 325, in _getconftestmodules
+    return self._path2confmods[path]
+KeyError: local('/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/spacy/tests')
+
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/_pytest/config.py", line 356, in _importconftest
+    return self._conftestpath2mod[conftestpath]
+KeyError: local('/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/spacy/tests/conftest.py')
+
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/_pytest/config.py", line 362, in _importconftest
+    mod = conftestpath.pyimport()
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/py/_path/local.py", line 662, in pyimport
+    __import__(modname)
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/_pytest/assertion/rewrite.py", line 216, in load_module
+    py.builtin.exec_(co, mod.__dict__)
+  File "/home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/spacy/tests/conftest.py", line 15, in <module>
+    from ..he import Hebrew
+ModuleNotFoundError: No module named 'spacy.he'
+ERROR: could not load /home/felix/.pyenv/versions/miniconda3-latest/lib/python3.6/site-packages/spacy/tests/conftest.py
+
+(miniconda3-latest) felix@pegasus ~/Schreibtisch/DSR/youtube_api_projekt $ 
+

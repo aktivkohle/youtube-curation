@@ -57,7 +57,7 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor1:
-    sql = "SELECT DISTINCT(videoId) FROM search_api WHERE videoId NOT IN (SELECT videoId FROM captions WHERE queryMethod = 'youtube-dl');"
+    sql = "SELECT DISTINCT(videoId) FROM search_api WHERE videoId NOT IN (SELECT videoId FROM captions WHERE queryMethod = 'youtube-dl') AND videoId NOT IN (SELECT DISTINCT(videoId) FROM statistics WHERE durationSeconds < 10);"
     cursor1.execute(sql)
     videoIdsDicts = cursor1.fetchall()
 
@@ -105,6 +105,12 @@ with connection.cursor() as cursor2:
             clean_directory() # important line or will polute DB!!
 
         else:
-            print ("\n","There was a standard error with videoId ", videoId, "!!", " Error Contents: ", result.stderr, "\n")    
+            print ("\n","There was a standard error with videoId ", videoId, "!!", " Error Contents: ", result.stderr, "\n")
+            with connection.cursor() as cursor3:
+                queriedAt = printDateNicely(datetime.now())
+                errorMessage = result.stderr
+                sql = "INSERT INTO NOcaptions (videoId, queriedAt, errorMessage) VALUES (%s,%s,%s)"
+                cursor3.execute(sql, (videoId, queriedAt, errorMessage))
+                connection.commit() 
 
 connection.close()

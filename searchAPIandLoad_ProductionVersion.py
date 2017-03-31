@@ -17,18 +17,9 @@ def printUnixTimestampNicely(Tstamp):
 logfileName = datetime.datetime.now().strftime("%d%B%Y%I:%M:%S%p") + '_Logfile.txt'
 f = open("./logfiles/" + logfileName, 'w')
 
-youtubeObjects = {}
-
 def printDateNicely(timestamp):
     reg_format_date = timestamp.strftime("%d %B %Y %I:%M:%S %p")
     print(reg_format_date)
-
-def storeMe(objts, ytDict):                                               #****************!
-    t = time.time()
-    if (t not in list(ytDict)):
-        ytDict.update({t:objts})
-    else:
-        print ("Oh no timestamp already in there :(")    
 
 def wr(message, p, fi):    # to write to log file
     fi.write(str(message))
@@ -72,20 +63,16 @@ def storeMeInSQL(element, qq, SQLconnection, openlogfileHandle):
             sql1 = "SELECT DISTINCT(videoId) FROM search_api"    # Wall time: 14.3 µs
             cursor1.execute(sql1)                                # (Not Expensive)   
             videoIdsDicts = cursor1.fetchall()
-            videoIds = [d.get('videoId') for d in videoIdsDicts]
-        sql2 = "INSERT INTO search_api (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, query_q) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"        
+            videoIds = [d.get('videoId') for d in videoIdsDicts]        
         if videoId not in videoIds:
             with SQLconnection.cursor() as cursor2:
+                sql2 = "INSERT INTO search_api (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, query_q) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"        
                 cursor2.execute(sql2, (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, qq))
+                SQLconnection.commit()
         else:
             openlogfileHandle.write("Avoided saving a duplicate into SQL!" + " - " + videoId)
             openlogfileHandle.write("\n")
-        SQLconnection.commit()
-    
-
-    
-    
-    
+   
 v = askTheUser()
 
 if v == None:
@@ -96,16 +83,12 @@ end_of_month_string = v[1]
 query_q = v[2]
 
 
-    
-    
-##############################################################################################################
 connection = pymysql.connect(host='localhost',
                              user='root',
                              password=config.MYSQL_SERVER_PASSWORD,
                              db='youtubeProjectDB',
                              charset='utf8mb4', # deals with the exotic emojis
                              cursorclass=pymysql.cursors.DictCursor)
-##############################################################################################################
 
 print ("\n\n")          
 printDateNicely(datetime.datetime.now())
@@ -115,7 +98,7 @@ payload = {'key': config.GOOGLE_API_KEY,
     'q': query_q,                                           # 'dog+training'
     'order' : 'date',                  # reverse chronological of creation
     'type':'video',
-    'videoCaption':'closedCaption',    # includes captions. 
+  #  'videoCaption':'closedCaption',    # includes captions. 
     'maxResults':50}    
 
 
@@ -177,14 +160,13 @@ while end_datetime < end_of_month_datetime:
 
         if 'nextPageToken' not in list(objects):
             print ("NormalLengthDay") 
-        # storeMe(objects, youtubeObjects)                                #********************!
             storeMeInSQL(objects, query_q, connection, f)
+            counter += 1
+            daycount = 1
             
-
         elif 'nextPageToken' in list(objects):
-        #   storeMe(objects, youtubeObjects)                            # ********************* !
-            storeMeInSQL(objects, query_q, connection, f)
-            
+            storeMeInSQL(objects, query_q, connection, f)  
+            counter += 1          
             daycount = 1
             itemsEmpty = 0
             while 'nextPageToken' in list(objects):    
@@ -200,9 +182,8 @@ while end_datetime < end_of_month_datetime:
                 if statuscode == 200:
                     time.sleep( 1/5 ) 
                     objects = r.json()
-            #    storeMe(objects, youtubeObjects)                        # ****************** !
-                    storeMeInSQL(objects, query_q, connection, f)
-                    
+                    storeMeInSQL(objects, query_q, connection, f)   
+                    counter += 1                 
                     daycount += 1
                 else:
                     print (bs, statuscode)
@@ -212,26 +193,24 @@ while end_datetime < end_of_month_datetime:
                     itemsEmpty += 1
                 if itemsEmpty > 3:
                     break
-                    
-            print(daycount, " pages of results today.")
-            f.write(str(daycount) + " pages of results today.")
-            wr(4, payload, f)
-            payload.pop('pageToken')  
-            wr(5, payload, f)
-            # Very importantly! 
-            # now that this section is finished clean out that key from the dictionary!!!
-                    
+            payload.pop('pageToken')   
+            # important! - now that this section is finished clean out that key from the dictionary!!!
+            wr(4, payload, f)                  
+        
+        print(daycount, " pages of results today.")
+        f.write(str(daycount) + " pages of results today.")
+        wr(5, payload, f)
+                   
     else:
         print ("statuscode : ", statuscode)
 
     time.sleep( 1/5 ) 
 
-    counter += 1
-    if counter % 100 == 0:
-        print (counter)
+
                         
 print ('\n')
 printDateNicely(datetime.datetime.now())
+print (counter, " SQL-store operations in total.")
 
 f.close()
 connection.close()
