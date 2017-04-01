@@ -11,7 +11,6 @@ from datetime import datetime
 import time
 import pymysql.cursors
 
-
 def clean_directory():    
     files = glob.glob('./youtube-dl-output/*')
     print ("Deleting..")
@@ -61,7 +60,6 @@ def loadIntoSql(VI, CT, CF, L, CFF, SQLCursor, SQLconnection):
 path = './youtube-dl-output'
 PATH = './youtube-dl-output/'
         
-#****************************************************************************************#
 connection = pymysql.connect(host='localhost',
                              user='root',
                              password=config.MYSQL_SERVER_PASSWORD,
@@ -81,6 +79,8 @@ time.sleep(2)
 # Try just the first 5 first for testing purposes:
 # Comment this out for serious use!
 # videoIds = videoIds[:100]
+
+print (len(videoIds), " videoIds.")
 
 with connection.cursor() as cursor2:
     for videoId in videoIds:
