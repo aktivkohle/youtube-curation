@@ -98,7 +98,7 @@ payload = {'key': config.GOOGLE_API_KEY,
     'q': query_q,                                           # 'dog+training'
     'order' : 'date',                  # reverse chronological of creation
     'type':'video',
-  #  'videoCaption':'closedCaption',    # includes captions. 
+    'videoCaption':'closedCaption',    # includes captions. 
     'maxResults':50}    
 
 
