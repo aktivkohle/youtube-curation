@@ -41,6 +41,7 @@ def zed(ts):
     
 
 def storeMeInSQL(element, qq, SQLconnection, openlogfileHandle):
+    global counter
     queriedAt = printUnixTimestampNicely(time.time())
     kind = element['kind']
     etag = element['etag']
@@ -59,16 +60,21 @@ def storeMeInSQL(element, qq, SQLconnection, openlogfileHandle):
         publishedAt = e.strftime('%Y-%m-%d %H:%M:%S') 
         items_etag = thing['etag']
         channelId = thing['snippet']['channelId']
-        with connection.cursor() as cursor1:                     # CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+        with SQLconnection.cursor() as c1:                     # CPU times: user 0 ns, sys: 0 ns, total: 0 ns
             sql1 = "SELECT DISTINCT(videoId) FROM search_api"    # Wall time: 14.3 µs
-            cursor1.execute(sql1)                                # (Not Expensive)   
-            videoIdsDicts = cursor1.fetchall()
+            c1.execute(sql1)                                # (Not Expensive)   
+            videoIdsDicts = c1.fetchall()
             videoIds = [d.get('videoId') for d in videoIdsDicts]        
         if videoId not in videoIds:
-            with SQLconnection.cursor() as cursor2:
+            with SQLconnection.cursor() as c2:
                 sql2 = "INSERT INTO search_api (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, query_q) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"        
-                cursor2.execute(sql2, (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, qq))
+                c2.execute(sql2, (videoTitle, channelTitle, videoId, description, publishedAt, queriedAt, kind, etag, regionCode, items_etag, channelId, qq))
                 SQLconnection.commit()
+                counter += 1
+                # caution! 'counter' is here a global variable.  Maybe safer if it went as an 
+                # argument into the function but not so serious. 
+                # Anyway, the logic of incrementing it in the three places where this function is called
+                # was wrong, now it is only incremented in one place, after the commit statement.                 
         else:
             openlogfileHandle.write("Avoided saving a duplicate into SQL!" + " - " + videoId)
             openlogfileHandle.write("\n")
@@ -161,12 +167,10 @@ while end_datetime < end_of_month_datetime:
         if 'nextPageToken' not in list(objects):
             print ("NormalLengthDay") 
             storeMeInSQL(objects, query_q, connection, f)
-            counter += 1
             daycount = 1
             
         elif 'nextPageToken' in list(objects):
-            storeMeInSQL(objects, query_q, connection, f)  
-            counter += 1          
+            storeMeInSQL(objects, query_q, connection, f)           
             daycount = 1
             itemsEmpty = 0
             while 'nextPageToken' in list(objects):    
@@ -183,7 +187,6 @@ while end_datetime < end_of_month_datetime:
                     time.sleep( 1/5 ) 
                     objects = r.json()
                     storeMeInSQL(objects, query_q, connection, f)   
-                    counter += 1                 
                     daycount += 1
                 else:
                     print (bs, statuscode)
