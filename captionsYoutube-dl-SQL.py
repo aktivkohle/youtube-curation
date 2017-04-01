@@ -2,6 +2,7 @@
 # http://www.saltycrane.com/blog/2008/09/how-get-stdout-and-stderr-using-python-subprocess-module/
 insertionErrors= 0
 from subprocess import Popen, PIPE, STDOUT
+from subprocess import run as subprRun
 import sys
 from parseSubtitles import getVtt
 import os
@@ -33,6 +34,8 @@ def youtubeComplains(message):
         return True
     elif ("doesn\'t have subtitles" in m):
         return True
+    elif ("This video is unavailable" in m):
+        return True
     else:
         return False
 
@@ -59,6 +62,9 @@ def loadIntoSql(VI, CT, CF, L, CFF, SQLCursor, SQLconnection):
 
 path = './youtube-dl-output'
 PATH = './youtube-dl-output/'
+
+ytdl_version = subprRun(['youtube-dl', '--version'], stdout=PIPE, cwd=path).stdout.decode('utf-8') 
+print ("Using youtube-dl version : ", ytdl_version)
         
 connection = pymysql.connect(host='localhost',
                              user='root',
@@ -80,7 +86,7 @@ time.sleep(2)
 # Comment this out for serious use!
 # videoIds = videoIds[:100]
 
-print (len(videoIds), " videoIds.")
+print (len(videoIds), " relevant videoIds found.")
 
 with connection.cursor() as cursor2:
     for videoId in videoIds:
