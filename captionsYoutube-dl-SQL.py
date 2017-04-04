@@ -43,14 +43,15 @@ def loadIntoSql(VI, CT, CF, L, CFF, SQLCursor, SQLconnection):
     queryMethod = 'youtube-dl'
     queriedAt = printDateNicely(datetime.now())
     captionsText = CT
+    wordCount = None
     captionsFile = CF
     captionsFileFormat = CFF
     language = L
     videoId = VI
 
     try:
-        sql = "INSERT INTO captions (videoId, captionsText, captionsFile, language, captionsFileFormat, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-        SQLCursor.execute(sql, (videoId, captionsText, captionsFile, language, captionsFileFormat, queryMethod, queriedAt))   
+        sql = "INSERT INTO captions (videoId, captionsText,wordCount, captionsFile, language, captionsFileFormat, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+        SQLCursor.execute(sql, (videoId, captionsText, wordCount, captionsFile, language, captionsFileFormat, queryMethod, queriedAt))   
         SQLconnection.commit() # better here or every 10 
         print(".", end="")
     except:
