@@ -11,6 +11,7 @@ import config
 from datetime import datetime
 import time
 import pymysql.cursors
+import html
 
 def clean_directory():    
     files = glob.glob('./youtube-dl-output/*')
@@ -51,6 +52,8 @@ def loadIntoSql(VI, CT, CF, L, CFF, SQLCursor, SQLconnection):
 
     try:
         sql = "INSERT INTO captions (videoId, captionsText,wordCount, captionsFile, language, captionsFileFormat, queryMethod, queriedAt) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+        if 'en' in language or 'de' in language:
+        	CT = html.unescape(CT)
         SQLCursor.execute(sql, (videoId, captionsText, wordCount, captionsFile, language, captionsFileFormat, queryMethod, queriedAt))   
         SQLconnection.commit() # better here or every 10 
         print(".", end="")
