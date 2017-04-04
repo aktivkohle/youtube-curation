@@ -12,7 +12,7 @@ connection = pymysql.connect(host='localhost',
 updated = 0
 print ('Updating the following ids: ')
 with connection.cursor() as cursor:
-        sql1 = "SELECT captionsText, id FROM captions WHERE language LIKE '%en%';"        
+        sql1 = "SELECT captionsText, id FROM captions WHERE language LIKE '%en%' OR language like '%de%';"
         cursor.execute(sql1)
         results = cursor.fetchall()    # fetchall is much more redundant than fetchone method in other scripts!!
         for row in results:
