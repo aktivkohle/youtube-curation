@@ -1,1 +1,0 @@
-UPDATE `youtubeProjectDB`.`captions` SET `captionsText`='DOG TRAINING TRICKS AND TIPS: For all dogs... No matter what they figure out themselves... It&#39;s nice to have proven methods to add more character! :) Wouldn&#39;t you like to show your dog off, CONFIDENTLY?!  Sign up or your FREE TRAINING VIDEOS BELOW!!! v ' WHERE `id`='37';
