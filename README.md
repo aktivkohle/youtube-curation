@@ -4,7 +4,9 @@ So higher aim of this project was to see if you can curate youtube videos based 
 
 Most of the scripts here create and populate a MySQL database full of youtube video transcripts (aka captions, subtitles), and other video statistics and metadata. 
 
-[runAll.py](https://github.com/aktivkohle/youtube-curation/blob/master/runAll.py) will run the 4 main files that populate the database one after the other. It will ask the user two questions when run about the desired query and date range the proceed to populate the various tables including the captions table with all the texts. These multiple files were necessary, the YouTube V3 API does not let you get all this information with just one query. 
+There are 4 scripts which populate the various tables, [searchAPIandLoad_ProductionVersion.py](https://github.com/aktivkohle/youtube-curation/blob/master/searchAPIandLoad_ProductionVersion.py), [PullIDsfromSQL_RetrieveLikesDislikes.py](https://github.com/aktivkohle/youtube-curation/blob/master/PullIDsfromSQL_RetrieveLikesDislikes.py), [captionsYoutube_dl_SQL.py](https://github.com/aktivkohle/youtube-curation/blob/master/captionsYoutube_dl_SQL.py) and [wordCountColumn.py](https://github.com/aktivkohle/youtube-curation/blob/master/wordCountColumn.py).
+
+[runAll.py](https://github.com/aktivkohle/youtube-curation/blob/master/runAll.py) will run these one after the other. It will ask the user two questions when run about the desired query and date range the proceed to populate the various tables including the captions table with all the texts. These multiple files were necessary, the YouTube V3 API does not let you get all this information with just one query. 
 
 There are many .sql files which create and modify the tables. It turned out along the way that the initial schemas had to be modified for one reason or another, at some point I will consolidate them into fewer files that create the schemas in their finished state. 
 
