@@ -253,3 +253,8 @@ SELECT YEAR(STR_TO_DATE(publishedAt, '%Y-%m-%d %k:%i:%s')) FROM search_api;
 SELECT YEAR(STR_TO_DATE(publishedAt, '%Y-%m-%d %k:%i:%s')), COUNT(*) FROM search_api WHERE query_q='machine+learning' GROUP BY YEAR(STR_TO_DATE(publishedAt, '%Y-%m-%d %k:%i:%s'));
 
 SELECT queriedAt, videoId, captionsText FROM captions ORDER BY STR_TO_DATE(queriedAt, '%Y-%m-%d %k:%i:%s') DESC;
+
+SELECT videoId, viewCount, likeCount, 
+ROUND((likeCount + 0.0) / (viewCount + 0.0), 20) AS likesRatio, 
+dislikeCount, favoriteCount, commentCount, duration, durationSeconds, dimension, definition, caption, licensedContent, projection, relevantTopicIDs, topicCategories, kind, etag, queriedAt, id
+FROM youtubeProjectDB.statistics;
