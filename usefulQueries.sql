@@ -254,10 +254,10 @@ SELECT YEAR(STR_TO_DATE(publishedAt, '%Y-%m-%d %k:%i:%s')), COUNT(*) FROM search
 
 SELECT queriedAt, videoId, captionsText FROM captions ORDER BY STR_TO_DATE(queriedAt, '%Y-%m-%d %k:%i:%s') DESC;
 
-SELECT statistics.videoId, viewCount, likeCount, 
-ROUND((likeCount + 0.0) / (viewCount + 0.0), 20) AS likesViewsRatio, 
+SELECT ROUND((likeCount + 0.0) / (viewCount + 0.0), 10) AS likesViewsRatio, 
+viewCount, likeCount, dislikeCount, statistics.videoId,
 videoTitle, channelTitle, description, publishedAt, regionCode,
-dislikeCount, favoriteCount, commentCount, duration, durationSeconds, 
+favoriteCount, commentCount, duration, durationSeconds, 
 dimension, definition, caption, licensedContent, projection, 
 relevantTopicIDs, topicCategories, statistics.kind AS statisticsKind, 
 statistics.etag AS statisticsEtag, statistics.queriedAt AS statisticsQueriedAt, 
@@ -265,4 +265,14 @@ statistics.id AS statisticsID
 FROM youtubeProjectDB.statistics
 INNER JOIN youtubeProjectDB.search_api
 ON search_api.videoId = statistics.videoId
+WHERE viewCount > 10000                             
 ORDER BY likesViewsRatio DESC;
+
+# Yes, I just briefly looked at only video with a ratio > 1, 1.32, on youtube, 
+# he still has 810 likes for 611 views on youtube. Won't shame him but not
+# sure how he managed it. It's a short ad that goes for a bit more than a minute. 
+
+# It seemed like an interesting metric - lots of views and a large percentage of 
+# viewers are logged in and click like, but practically does not seem to have much
+# classification value, if anything finds more sensational videos than useful ones,
+# and that despite tweaking viewCount > value.
