@@ -38,7 +38,7 @@ mysql> SHOW DATABASES;
 
 mysql> USE youtubeProjectDB ;
 Database changed
-mysql> source backup_youtube-cl-7April17.sql ;
+mysql> source backup_youtube-cl-7April17.dump ;
 
 Then wait a few minutes. This 250MB file took about 1 minute only to restore.
 
