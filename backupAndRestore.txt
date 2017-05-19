@@ -1,0 +1,43 @@
+Here is how it is done:
+
+Backup:
+
+$  mysqldump --opt -u root -p youtubeProjectDB  > backup_youtube-cl-7April17.dump
+
+Now to bring it back (on another machine for example)
+
+Log into MySQL from the directory where the backup is:
+
+$  mysql -u root -p
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0,00 sec)
+
+mysql> CREATE DATABASE youtubeProjectDB ;
+Query OK, 1 row affected (0,00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| youtubeProjectDB   |
++--------------------+
+6 rows in set (0,00 sec)
+
+mysql> USE youtubeProjectDB ;
+Database changed
+mysql> source backup_youtube-cl-7April17.sql ;
+
+Then wait a few minutes. This 250MB file took about 1 minute only to restore.
