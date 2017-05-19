@@ -41,3 +41,36 @@ Database changed
 mysql> source backup_youtube-cl-7April17.sql ;
 
 Then wait a few minutes. This 250MB file took about 1 minute only to restore.
+
+__________________________________________________
+
+mysql> SELECT COUNT(*) FROM search_api;
++----------+
+| COUNT(*) |
++----------+
+|     9905 |
++----------+
+1 row in set (0,01 sec)
+
+mysql> SHOW TABLES;
++----------------------------+
+| Tables_in_youtubeProjectDB |
++----------------------------+
+| NOcaptions                 |
+| captions                   |
+| search_api                 |
+| statistics                 |
++----------------------------+
+4 rows in set (0,01 sec)
+
+mysql> SELECT COUNT(*) FROM captions;
++----------+
+| COUNT(*) |
++----------+
+|    14571 |
++----------+
+1 row in set (0,04 sec)
+
+mysql> 
+
+Yes, looks like it's all back again :)
