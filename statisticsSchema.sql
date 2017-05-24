@@ -9,6 +9,7 @@ CREATE TABLE youtubeProjectDB.statistics(
 	favoriteCount INT,
 	commentCount INT,
 	duration VARCHAR(20),
+	durationSeconds INT,
 	dimension VARCHAR(5),
 	definition VARCHAR(5),
 	caption VARCHAR(8),
