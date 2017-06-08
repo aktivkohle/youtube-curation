@@ -16,7 +16,7 @@ In the notebooks folder, [whatsInThere.ipynb](https://github.com/aktivkohle/yout
 
 As for the natural language processing, the file [TextbooksAndCaptions_Similarity.ipynb](https://github.com/aktivkohle/youtube-curation/blob/master/notebooks/TextbooksAndCaptions_Similarity.ipynb) steps through text cleaning and tokenizing with the spaCy library and computes similarities between a subset of the videos captions and a list of textbooks contained in a folder on the hard drive based on their texts. At the bottom of this page is the output which shows the 3 most similar captions or textbooks in the set - it has actually worked quite well!
 
-That however was for a subset of 35 out of about 8000 documents. While that took perhaps 15 minutes of computing time, doing the whole lot will take longer. Ther's okay if it's a one-off but what about every time you add a new document?
+That however was for a subset of 35 out of about 8000 documents. While that took perhaps 15 minutes of computing time, doing the whole lot will take longer. That's okay if it's a one-off but what about every time you add a new document?
 
 Well, thankfully it looks like there is a [solution](https://stackoverflow.com/questions/13986518/how-to-efficiently-compute-similarity-between-documents-in-a-stream-of-documents). Here is the relevant quote:
 
