@@ -7,3 +7,9 @@
 # https://stackoverflow.com/questions/8955448/save-load-scipy-sparse-csr-matrix-in-portable-data-format
 
 ALTER TABLE youtubeProjectDB.captions ADD tfidfVector BLOB AFTER wordCount;
+
+# It is vitally important that the same fixed vocabulary is used to create each of these 
+# vectors. At the moment probably a dictionary with 429429 entries. 
+# Each sparse matrix creates a file of about 1kB. 
+# BLOB will store up to about 65kB whereas TINYBLOB stores 256 Bytes 
+# Hence the decision to go with BLOB
