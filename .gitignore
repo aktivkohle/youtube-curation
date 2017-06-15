@@ -9,6 +9,10 @@ config.py
 *.pickle
 *.npy
 
+# ignore database dumps #
+##############################################
+*.dump
+
 # ignore logfiles #
 ###################
 
