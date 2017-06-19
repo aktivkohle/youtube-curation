@@ -148,7 +148,6 @@ for item in manyCaptions:
     with connection.cursor() as cursor:        
         sql = """UPDATE captions SET tfidfVector=%s WHERE id=%s"""    
         cursor.execute(sql, (fileContent, captionsID))
-        connection.commit()
- 
+        connection.commit() 
 connection.close()   
 timer1.timer()
