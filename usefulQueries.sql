@@ -276,3 +276,11 @@ ORDER BY likesViewsRatio DESC;
 # viewers are logged in and click like, but practically does not seem to have much
 # classification value, if anything finds more sensational videos than useful ones,
 # and that despite tweaking viewCount > value.
+
+# 19 June 2017. Now we have a MEDIUMBLOB column with the tfidfVector in it. Here are
+# a few queries to have a look at at:
+
+SELECT videoId, captionsText, wordCount, tfidfVector, 
+LENGTH(tfidfVector), (LENGTH(tfidfVector)/wordCount) 
+FROM captions
+ORDER BY LENGTH(tfidfVector) DESC;

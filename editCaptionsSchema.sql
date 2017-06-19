@@ -13,3 +13,12 @@ ALTER TABLE youtubeProjectDB.captions ADD tfidfVector BLOB AFTER wordCount;
 # Each sparse matrix creates a file of about 1kB. 
 # BLOB will store up to about 65kB whereas TINYBLOB stores 256 Bytes 
 # Hence the decision to go with BLOB
+
+
+# Oh no!
+# pymysql.err.DataError: (1406, "Data too long for column 'tfidfVector' at row 1")
+
+ALTER TABLE youtubeProjectDB.captions DROP COLUMN tfidfVector;
+
+ALTER TABLE youtubeProjectDB.captions ADD tfidfVector MEDIUMBLOB AFTER wordCount;
+
