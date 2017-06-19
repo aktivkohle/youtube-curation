@@ -126,7 +126,7 @@ timer1.timer()
 
 print (len(manyCaptions), ' records found to be vectorized..')
 
-with open('../vocab_from_allEnglish_captions_and_some_texts.pickle', 'rb') as f:
+with open('vocab_from_allEnglish_captions_and_some_texts.pickle', 'rb') as f:
     v = pickle.load(f)  
 
 print ('length of vocabulary dictionary used is: ', len(v)) 
