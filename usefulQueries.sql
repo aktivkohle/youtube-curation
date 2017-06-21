@@ -290,13 +290,17 @@ ORDER BY LENGTH(tfidfVector) DESC;
 # I expanded on the Stackoverflow solution for the case where two or more rows have
 # those two fields repeated.
 
-SELECT * FROM captions c
+SELECT * FROM                  # This just joins the titles on.
+(SELECT DISTINCT(videoId) AS v, videoTitle FROM search_api) A
+INNER JOIN
+(SELECT * FROM captions c       # This is the interesting bit:
 INNER JOIN(SELECT videoId AS InnerVideoId, 
 	MAX(wordCount) AS MaxWordCount, 
-    MAX(id) AS MaxId
+	MAX(id) AS MaxId
 	FROM captions 
 	WHERE tfidfVector IS NOT NULL 
 	GROUP BY videoId) grouped_c
 ON c.videoId = grouped_c.InnerVideoId
 AND c.wordCount = grouped_c.MaxWordCount
-AND c.id = grouped_c.MaxId;
+AND c.id = grouped_c.MaxId) B
+ON A.v = B.videoId;
