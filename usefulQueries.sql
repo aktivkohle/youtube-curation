@@ -284,3 +284,19 @@ SELECT videoId, captionsText, wordCount, tfidfVector,
 LENGTH(tfidfVector), (LENGTH(tfidfVector)/wordCount) 
 FROM captions
 ORDER BY LENGTH(tfidfVector) DESC;
+
+# https://stackoverflow.com/questions/612231/how-can-i-select-rows-with-maxcolumn-value-distinct-by-another-column-in-sql?rq=1
+# (this is an interesting one.. join on 2 fields)
+# I expanded on the Stackoverflow solution for the case where two or more rows have
+# those two fields repeated.
+
+SELECT * FROM captions c
+INNER JOIN(SELECT videoId AS InnerVideoId, 
+	MAX(wordCount) AS MaxWordCount, 
+    MAX(id) AS MaxId
+	FROM captions 
+	WHERE tfidfVector IS NOT NULL 
+	GROUP BY videoId) grouped_c
+ON c.videoId = grouped_c.InnerVideoId
+AND c.wordCount = grouped_c.MaxWordCount
+AND c.id = grouped_c.MaxId;
