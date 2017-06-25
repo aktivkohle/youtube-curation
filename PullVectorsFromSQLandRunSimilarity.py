@@ -14,7 +14,7 @@ from tempfile import SpooledTemporaryFile
 from scipy.sparse import csr_matrix
 from scipy.sparse import vstack as vstack_sparse_matrices
 
-# Fimctopm to reassemble the p matrix from the vectors
+# Function to reassemble the p matrix from the vectors
 
 def reconstitute_vector(bytesblob):
     f = SpooledTemporaryFile(max_size=1000000000)
