@@ -1,5 +1,5 @@
 from PullVectorsFromSQLandRunSimilarity import p, nth_similar_tuple
-from fit_one_document import pipe_fit_transform       # my own program
+from fit_one_document import pipe_fit_transform 
 
 number_similar_videos = 5
 
