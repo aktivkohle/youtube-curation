@@ -8,7 +8,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def my_form():
-    return render_template('six_similar.html')
+
+    return render_template('six_similar.html', YTID1='dZTwJ31kEHo')
 
 @app.route('/', methods=['POST'])
 def my_form_post():     
