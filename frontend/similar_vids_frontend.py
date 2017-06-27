@@ -8,16 +8,19 @@ app = Flask(__name__)
 
 @app.route('/')
 def my_form():
-
-    return render_template('six_similar.html', YTID1='dZTwJ31kEHo')
+    return render_template('six_similar.html', YTID1='dZTwJ31kEHo', showAll = False)
 
 @app.route('/', methods=['POST'])
-def my_form_post():     
+def my_form_post():   
+    global showAll  
     if request.form['submit'] == 'receive_text':
         print ("button pushed")
         text = request.form['text']
-        print (text)        
-    return ('', 204)
+        print (text)
+        showAll = True     
+    return render_template('six_similar.html', YTID1='dZTwJ31kEHo', showAll = True)           
+
+    #return ('', 204)
 
 if __name__ == '__main__':
     app.run()
