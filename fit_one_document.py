@@ -1,6 +1,5 @@
 from collections import OrderedDict
-from os import listdir
-from os.path import isfile, join
+import os
 import sys
 sys.path.append('../')
 import config
@@ -24,6 +23,7 @@ import scipy
 from tempfile import SpooledTemporaryFile
 from scipy import io as scipyio
 from codeTimer import SeparateTimeTrackers
+
         
 timer1 = SeparateTimeTrackers("FirstTimer")
 
@@ -101,10 +101,15 @@ def tokenizeText(sample):
     return tokens
 
         
-timer1.timer()      
+timer1.timer()     
 
+# necessary as this file is often called from the frontend directory above:
+dictionary_pickle = os.path.join(
+    os.path.split(__file__)[0],
+    'vocab_from_allEnglish_captions_and_some_texts.pickle'
+) 
 
-with open('vocab_from_allEnglish_captions_and_some_texts.pickle', 'rb') as f:
+with open(dictionary_pickle, 'rb') as f:
     v = pickle.load(f)  
 
 print ('length of vocabulary dictionary used is: ', len(v)) 
