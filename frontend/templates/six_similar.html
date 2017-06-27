@@ -1,43 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>youtube curation with NLP</title>
+        {% block head %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='bootstrap-theme.min.css') }}">
+    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='ie10-viewport-bug-workaround.css') }}">
+    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='six_similar.css') }}">
+    <script type= "text/javascript" src="{{ url_for('static', filename='ie-emulation-modes-warning.js') }}"></script>   
+    <script type= "text/javascript" src="{{ url_for('static', filename='ie10-viewport-bug-workaround.js') }}"></script>     
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+         {% endblock %}
 
-    <!-- this one to style the button: -->
-    <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <!--http://charliepark.org/bootstrap_buttons/  for the colouring!-->
-
-    <!-- Custom styles for this template -->
-    <link href="six_similar.css" rel="stylesheet">
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-  </head>
 
 <!--http://www.catipsum.com/index.php-->
 <!-- based on template http://getbootstrap.com/examples/grid/ -->
+<!--http://charliepark.org/bootstrap_buttons/  for the colouring!-->
+
 
   <body>
     <div class="container"> 
       <br>
       <p>Paste or type your text here to locate similar videos based only on their caption texts.</p>
-      <textarea class="form-control" style="resize:none"></textarea>
-      <div class="col-md-12 text-center buttondiv"> 
-      <button type="button" class="btn btn-lg btn-default btn-custom">Run NLP similarity!</button>
-      </div>
+
+      <form id="textform" method="post">
+          <textarea class="form-control" name = "text" style="resize:none"></textarea>
+          <div class="col-md-12 text-center buttondiv">    
+            <button type="submit" class="btn btn-lg btn-default btn-custom" value="receive_text" name="submit">Run NLP similarity!</button>
+          </div>
+          
+     </form>
 
       <br><br>
 
@@ -84,7 +76,6 @@
       </div>
 
     </div> <!-- /container -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
   </body>
 </html>
