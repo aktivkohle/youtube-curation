@@ -22,15 +22,25 @@ def my_form_post():
         print (text)
         similar_vids = similar_to_doc(text)
         showAll = True   
+        # ids :
         YTID1 = similar_vids[0][1]
         YTID2 = similar_vids[1][1]
         YTID3 = similar_vids[2][1]
         YTID4 = similar_vids[3][1]
         YTID5 = similar_vids[4][1]
         YTID6 = similar_vids[5][1]
-        print (similar_vids)        
+        # titles:
+        YTTITLE1 = similar_vids[0][0]
+        YTTITLE2 = similar_vids[1][0]
+        YTTITLE3 = similar_vids[2][0]
+        YTTITLE4 = similar_vids[3][0]
+        YTTITLE5 = similar_vids[4][0]
+        YTTITLE6 = similar_vids[5][0]
+        print (similar_vids)
     return render_template(
-        'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID6=YTID6, showAll = True)           
+        'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID6=YTID6,
+         YTTITLE1=YTTITLE1, YTTITLE2=YTTITLE2, YTTITLE3=YTTITLE3, YTTITLE4=YTTITLE4,
+          YTTITLE6=YTTITLE6, showAll = True)
 
     #return ('', 204)
 
