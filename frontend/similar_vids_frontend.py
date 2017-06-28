@@ -38,8 +38,8 @@ def my_form_post():
         YTTITLE6 = similar_vids[5][0]
         print (similar_vids)
     return render_template(
-        'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID6=YTID6,
-         YTTITLE1=YTTITLE1, YTTITLE2=YTTITLE2, YTTITLE3=YTTITLE3, YTTITLE4=YTTITLE4,
+        'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID5=YTID5, YTID6=YTID6,
+         YTTITLE1=YTTITLE1, YTTITLE2=YTTITLE2, YTTITLE3=YTTITLE3, YTTITLE4=YTTITLE4, YTTITLE5=YTTITLE5,
           YTTITLE6=YTTITLE6, showAll = True)
 
     #return ('', 204)
