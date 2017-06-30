@@ -9,7 +9,7 @@ import config
 
 def verify_text(t):
     wordcount = len(t.split(' '))
-    if wordcount > 20 and wordcount < 1000:
+    if wordcount > 20 and wordcount < 10000:
         return True
     else:
         return False
