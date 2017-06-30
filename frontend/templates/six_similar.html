@@ -5,13 +5,23 @@
 
     <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='bootstrap-theme.min.css') }}">
-    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='ie10-viewport-bug-workaround.css') }}">
+    <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='ie10-viewport-bug-workaround.css')}}">
     <link rel="stylesheet"  type= "text/css" href="{{ url_for('static', filename='six_similar.css') }}">
     <script type= "text/javascript" src="{{ url_for('static', filename='ie-emulation-modes-warning.js') }}"></script>   
-    <script type= "text/javascript" src="{{ url_for('static', filename='ie10-viewport-bug-workaround.js') }}"></script>     
-
+    <script type= "text/javascript" src="{{ url_for('static', filename='ie10-viewport-bug-workaround.js') }}"></script>
+    <script type= "text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script type= "text/javascript" src="{{ url_for('static', filename='transition.js') }}"></script>
+    <script type= "text/javascript" src="{{ url_for('static', filename='alert.js') }}"></script>
+ 
          {% endblock %}
 
+<script>
+window.setTimeout(function() {
+    $(".alert-message").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 5000);
+</script>
 
 <!--http://www.catipsum.com/index.php-->
 <!-- based on template http://getbootstrap.com/examples/grid/ -->
@@ -21,15 +31,28 @@
   <body>
     <div class="container"> 
       <br>
-      <p>Paste or type your text here to locate similar videos based only on their caption texts.</p>
+      <p>Paste or type your text here to locate similar videos based only on their caption texts. More than twenty but less than ten thousand words</p>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible col-md-3 alert-message" role="alert">
+            <H2><strong>{{ message }}</strong></H2>
+            </div>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
 
       <form id="textform" method="post">
           <textarea class="form-control" name = "text" style="resize:none"></textarea>
           <div class="col-md-12 text-center buttondiv">    
             <button type="submit" class="btn btn-lg btn-default btn-custom" value="receive_text" name="submit">Run NLP similarity!</button>
           </div>
-          
      </form>
+
+
 
       <br><br>
 

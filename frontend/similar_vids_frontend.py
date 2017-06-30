@@ -1,11 +1,22 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
 from jinja2 import FileSystemLoader   
 from jinja2.environment import Environment
 import os.path, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 from video_similar_to_doc import similar_to_doc
+import config
+
+
+def verify_text(t):
+    wordcount = len(t.split(' '))
+    if wordcount > 20 and wordcount < 1000:
+        return True
+    else:
+        return False
+
 
 app = Flask(__name__)
+app.secret_key = config.SECRET_KEY
 
 @app.route('/')
 def my_form():
@@ -13,13 +24,25 @@ def my_form():
 
 @app.route('/', methods=['POST'])
 def my_form_post():   
-    global showAll  
-    if request.form['submit'] == 'receive_text':
-        print ("button pushed")
+    global showAll 
+    showAll = False
+
+    if request.form['submit'] == 'receive_text' and not verify_text(request.form['text']):
+        print ('wrong text')
+        textlength = len((request.form['text']).split(' '))
+        if textlength < 21:
+            flash('Not enough text! Please try again.')
+        elif textlength > 1000:
+            flash('Text too long! Please try again.')
+        else:
+            flash('Please try again!')
+        return redirect(url_for('my_form'))
+
+    elif request.form['submit'] == 'receive_text' and verify_text(request.form['text']):
         text = request.form['text']
+        showAll = True
         print (text)
         similar_vids = similar_to_doc(text)
-        showAll = True   
         # ids :
         YTID1 = similar_vids[0][1]
         YTID2 = similar_vids[1][1]
@@ -35,12 +58,10 @@ def my_form_post():
         YTTITLE5 = similar_vids[4][0]
         YTTITLE6 = similar_vids[5][0]
         print (similar_vids)
-    return render_template(
-        'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID5=YTID5, YTID6=YTID6,
-         YTTITLE1=YTTITLE1, YTTITLE2=YTTITLE2, YTTITLE3=YTTITLE3, YTTITLE4=YTTITLE4, YTTITLE5=YTTITLE5,
-          YTTITLE6=YTTITLE6, showAll = True)
-
-    #return ('', 204)
+        return render_template(
+            'six_similar.html', YTID1=YTID1, YTID2=YTID2, YTID3=YTID3, YTID4=YTID4, YTID5=YTID5, YTID6=YTID6,
+             YTTITLE1=YTTITLE1, YTTITLE2=YTTITLE2, YTTITLE3=YTTITLE3, YTTITLE4=YTTITLE4, YTTITLE5=YTTITLE5,
+              YTTITLE6=YTTITLE6, showAll = showAll)
 
 if __name__ == '__main__':
     app.run()
