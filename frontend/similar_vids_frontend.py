@@ -1,6 +1,4 @@
-from flask import Flask
-from flask import request
-from flask import render_template
+from flask import Flask, request, render_template
 from jinja2 import FileSystemLoader   
 from jinja2.environment import Environment
 import os.path, sys
