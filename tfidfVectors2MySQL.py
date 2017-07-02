@@ -114,11 +114,11 @@ timer1.timer()
 
 with connection.cursor() as cursor:
 
-    # Get all English language records!                        
+    # Get just the English language records which don't yet have a tfidfVector
     
             sql = """    
             SELECT captionsText, captions.id FROM captions
-            WHERE language LIKE '%en%';"""            
+            WHERE language LIKE '%en%' AND tfidfVector IS NULL;"""
             cursor.execute(sql)
             manyCaptions = cursor.fetchall()
                         
