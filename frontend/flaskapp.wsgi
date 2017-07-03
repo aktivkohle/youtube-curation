@@ -1,5 +1,7 @@
 import sys
 import logging
+import os.path
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
 
 logging.basicConfig(filename='example.log', level=logging.DEBUG)
