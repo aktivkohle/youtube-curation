@@ -1,27 +1,17 @@
-from collections import OrderedDict
 import os
 import sys
 sys.path.append('../')
-import config
-import pymysql.cursors
-import pandas as pd
 import spacy
 from spacy.en import English
 parser = English()
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.base import TransformerMixin
 from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
-from sklearn.metrics import accuracy_score
 from nltk.corpus import stopwords
 import string
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
-import scipy
-from tempfile import SpooledTemporaryFile
-from scipy import io as scipyio
 from codeTimer import SeparateTimeTrackers
 
         
