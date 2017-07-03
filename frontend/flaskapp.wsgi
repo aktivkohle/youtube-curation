@@ -3,14 +3,10 @@ import logging
 import os.path
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
-import site
 
-# Add virtualenv site packages
-site.addsitedir(os.path.join(os.path.dirname(__file__),     "/home/ubuntu/.pyenv/versions/vtenv4YTproject/lib/python3.6/site-packages"))
-
-# Fired up virtualenv before include application
-activate_env = os.path.expanduser(os.path.join(os.path.dirname(__file__), 'env/bin/activate_this.py'))
-execfile(activate_env, dict(__file__=activate_env))
+activate_this = '/home/ubuntu/.pyenv/versions/miniconda3-latest/envs/vtenv4YTproject/bin/activate_this.py'
+with open(activate_this) as file_:
+    exec(file_.read(), dict(__file__=activate_this))
 
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0, "/var/www/html/flaskapp")
