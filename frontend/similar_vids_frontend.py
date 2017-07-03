@@ -1,6 +1,4 @@
 from flask import Flask, request, render_template, flash, redirect, url_for
-from jinja2 import FileSystemLoader   
-from jinja2.environment import Environment
 import os.path, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 from video_similar_to_doc import similar_to_doc
