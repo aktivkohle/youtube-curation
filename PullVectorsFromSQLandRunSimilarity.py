@@ -1,17 +1,11 @@
-from collections import OrderedDict
-from os import listdir
-from os.path import isfile, join
 import sys
 sys.path.append('../')
 import config
 import pymysql.cursors
 import pandas as pd
 import numpy as np
-from random import randint
-from IPython.display import YouTubeVideo
 from scipy import io as scipyio
 from tempfile import SpooledTemporaryFile
-from scipy.sparse import csr_matrix
 from scipy.sparse import vstack as vstack_sparse_matrices
 
 # Function to reassemble the p matrix from the vectors

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690546e0-4481-4577-a264-605eb7142141" name="Default" comment="" />
+    <list default="true" id="690546e0-4481-4577-a264-605eb7142141" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PullVectorsFromSQLandRunSimilarity.py" afterPath="$PROJECT_DIR$/PullVectorsFromSQLandRunSimilarity.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,55 +14,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="fit_one_document.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fit_one_document.py">
+      <file leaf-file-name="PullVectorsFromSQLandRunSimilarity.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PullVectorsFromSQLandRunSimilarity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1410">
-              <caret line="108" column="80" lean-forward="true" selection-start-line="108" selection-start-column="80" selection-end-line="108" selection-end-column="80" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loadSearchintoSQL.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loadSearchintoSQL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NOcaptionsSchema.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NOcaptionsSchema.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parseSubtitles.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/parseSubtitles.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pullCaptionsIntoSQL.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pullCaptionsIntoSQL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="-737">
+              <caret line="19" column="59" lean-forward="true" selection-start-line="19" selection-start-column="59" selection-end-line="19" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -75,6 +33,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/fit_one_document.py" />
+        <option value="$PROJECT_DIR$/PullVectorsFromSQLandRunSimilarity.py" />
       </list>
     </option>
   </component>
@@ -217,7 +176,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1922" height="1080" extended-state="7" />
+    <frame x="-1" y="0" width="1922" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18177083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -330,7 +289,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pullCaptionsIntoSQL.py">
+    <entry file="file://$PROJECT_DIR$/parseSubtitles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -338,10 +297,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parseSubtitles.py">
+    <entry file="file://$PROJECT_DIR$/pullCaptionsIntoSQL.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#147#160#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PullIDsfromSQL_RetrieveLikesDislikes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#319#341#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PullVectorsFromSQLandRunSimilarity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-737">
+          <caret line="19" column="59" lean-forward="true" selection-start-line="19" selection-start-column="59" selection-end-line="19" selection-end-column="59" />
           <folding />
         </state>
       </provider>
