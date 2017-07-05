@@ -6,7 +6,7 @@ import config
 
 log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/logging.conf')
 
-logging.config.fileConfig('log_file_path', disable_existing_loggers=False)
+logging.config.fileConfig('log_file_path')
 
 sys.path.insert(0, "/var/www/html/frontend")
 
