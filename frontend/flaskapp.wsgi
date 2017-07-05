@@ -4,9 +4,9 @@ import os.path
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
 
-log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/logging.conf')
+log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/captains.log')
 
-logging.config.fileConfig('log_file_path')
+logging.config.basicConfig(log_file_path)
 
 sys.path.insert(0, "/var/www/html/frontend")
 
