@@ -6,7 +6,7 @@ import config
 
 log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/captains.log')
 
-logging.basicConfig(log_file_path)
+logging.basicConfig(filename=log_file_path, level=logging.INFO)
 
 sys.path.insert(0, "/var/www/html/frontend")
 
