@@ -4,7 +4,7 @@ import os.path
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
 
-log_file_path = path.join(path.dirname(path.abspath(__file__)), '/logfolder/logging.conf')
+log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/logging.conf')
 
 logging.config.fileConfig('log_file_path', disable_existing_loggers=False)
 
