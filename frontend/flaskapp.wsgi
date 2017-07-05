@@ -4,7 +4,9 @@ import os.path
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
 
-logging.config.fileConfig('/home/ubuntu/youtube-curation/frontend/logfolder/logging.conf', disable_existing_loggers=False)
+log_file_path = path.join(path.dirname(path.abspath(__file__)), '/logfolder/logging.conf')
+
+logging.config.fileConfig('log_file_path', disable_existing_loggers=False)
 
 sys.path.insert(0, "/var/www/html/frontend")
 
