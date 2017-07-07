@@ -4,9 +4,14 @@ import os.path
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import config
 
-log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/captains.log')
+log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '/logfolder/captains.log')
 
-logging.basicConfig(filename=log_file_path, level=logging.INFO)
+logging.basicConfig(filename=log_file, level=logging.INFO)
+h1 = logging.StreamHandler(sys.stdout)
+rootLogger = logging.getLogger()
+rootLogger.addHandler(h1)
+h2 = logging.StreamHandler(sys.stderr)
+rootLogger.addHandler(h2)
 
 sys.path.insert(0, "/var/www/html/frontend")
 
