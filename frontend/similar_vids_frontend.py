@@ -3,27 +3,7 @@ import os.path, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 from video_similar_to_doc import similar_to_doc
 import config
-import logging
 
-logging.info('Inside similar_vids_frontend.py')
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-# create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-
-# create formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# add formatter to ch
-ch.setFormatter(formatter)
-
-# add ch to logger
-logger.addHandler(ch)
-
-logger.info('Inside similar_vids_frontend.py')
 
 def verify_text(t):
     wordcount = len(t.split(' '))
