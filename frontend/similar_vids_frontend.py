@@ -18,7 +18,6 @@ app.secret_key = config.SECRET_KEY
 
 @app.route('/')
 def my_form():
-    logger.info('initial render template sending for empty text box.')
     return render_template('six_similar.html', showAll = False)
 
 @app.route('/', methods=['POST'])
