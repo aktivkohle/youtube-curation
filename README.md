@@ -16,3 +16,8 @@ The code in the repository carries out several functions:
 15000 captions texts are stored of which 8000 are in English. For the moment, I have stuck with English as the NLP scripts need an extra level of functionality otherwise. To ensure the vectors stored in the database all have exactly the same length in one dimension, the vocabulary file is also [stored](https://github.com/aktivkohle/youtube-curation/blob/master/vocab_from_allEnglish_captions_and_some_texts.pickle) here on github, it contains 429429 words (coincidence it was such a number..)
 
 The vectorizing is the slowest process, it takes about an hour to vectorize 8000 texts and store them in the database, even though they can be pulled out of the database in seconds. It takes again seconds to pull them all out again and store them in memory, and once the similarity matrix is in memory, it takes about 40mS to compute the most similar texts against the one supplied by the user. Again, the most time consuming part of that is to vectorize the users text, not to do a bit of matrix algebra. If the matrix were a lot bigger, millions rather than thousands of rows it might get slower and need other approaches but for now it works. 
+
+Here is a screenshot of the captions table being queried, just to get a feel for the content of the backend:
+
+![MySQL screenshot](screenshots/mysql_screenshot.png)
+
