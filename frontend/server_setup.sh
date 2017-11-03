@@ -5,6 +5,7 @@ sudo apt-get install mysql-client mysql-server
 sudo a2enmod wsgi   
 sudo apt-get install apache2-dev
 sudo apt-get install git
+apt-get install build-essential
 sudo apt-get install gcc
 sudo apt-get install g++
 sudo apt-get install python-dev
